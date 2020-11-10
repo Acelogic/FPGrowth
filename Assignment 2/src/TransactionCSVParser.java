@@ -16,10 +16,9 @@ import java.util.regex.Pattern;
 
 public class TransactionCSVParser {
     private ArrayList<Integer> memberidList;
-    private ArrayList<String> dateList;
-    private TreeSet<String> dateSet;
-    private ArrayList<String> itemList;
-    private TreeSet<String> itemSet;
+    private ArrayList<String> dateList, itemList;
+    private TreeSet<String> dateSet, itemSet;
+
     private ArrayList<TransactionLog> transactionLogList;
     private Hashtable<String, Integer> itemFrequency;
     private ArrayList<Transaction> transactionList;
