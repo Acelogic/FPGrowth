@@ -4,13 +4,10 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-    FPTree fp = new FPTree(800);
-    fp.populateTree();
-
-
-    fp.getFreqItemSet();
-    fp.getFreqItemSetReversed();
-    fp.getConditionalPatternBase();
+    FPTree fpTree = new FPTree(1400);
+    fpTree.insertAll();
+    fpTree.generateConditionalPatternBase(0);
+    fpTree.generateConditionalFP();
     System.out.println();
 
 

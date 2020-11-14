@@ -6,7 +6,7 @@ public class FPNode {
     String item = null;
     FPNode head = null;
     ArrayList<FPNode> children = new ArrayList();
-    static public ArrayList<FPNode> headLinks = new ArrayList<>();
+    static public ArrayList<FPNode> lowestLeafNodePath = new ArrayList<>();
 
     FPNode(String item) {
         this.item = item;
@@ -19,12 +19,12 @@ public class FPNode {
 
     ArrayList<FPNode> getHeadLinks(){
         if(head == null) {
-            headLinks.add(head);
-            Collections.reverse(headLinks);
-            return headLinks;
+            //lowestLeafNodePath.add(head);
+            Collections.reverse(lowestLeafNodePath);
+            return lowestLeafNodePath;
         }
         else {
-            headLinks.add(this);
+            lowestLeafNodePath.add(this);
             return head.getHeadLinks();
 
         }
@@ -32,6 +32,10 @@ public class FPNode {
 
     @Override
     public String toString() {
-        return "("+item + "|" + freq+")";
+       return "("+item + "|" + freq+")";
+        //return item;
     }
+
+
+
 }
