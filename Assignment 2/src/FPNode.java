@@ -17,9 +17,9 @@ public class FPNode {
         }
     }
 
+
     ArrayList<FPNode> getHeadLinks(){
         if(head == null) {
-            //lowestLeafNodePath.add(head);
             Collections.reverse(lowestLeafNodePath);
             return lowestLeafNodePath;
         }

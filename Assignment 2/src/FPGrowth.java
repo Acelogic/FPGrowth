@@ -68,7 +68,7 @@ public class FPGrowth {
             // Wipes Unsorted item list
             transaction.clear();
 
-            // Populates transaction item list based on sorted keyset
+            // Populates transaction item list based on sorted keyset from value sort
             transaction.addAll(sortedTemp.keySet());
 
         }

@@ -46,7 +46,7 @@ public class TransactionCSVParser {
         dumpCSV();
         buildTransactions();
         buildTransactionList();
-        buildItemFrequencyTable();
+        buildRawItemFrequencyTable();
 
     }
     private void dumpCSV() throws IOException {
@@ -98,7 +98,7 @@ public class TransactionCSVParser {
         }
     }
 
-    private void buildItemFrequencyTable(){
+    private void buildRawItemFrequencyTable(){
         for (String item: itemSet) {
             itemFrequency.put(item, Collections.frequency(itemList, item));
         }

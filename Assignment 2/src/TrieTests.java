@@ -71,7 +71,6 @@ class TrieTests {
         return addEntity(child, words);
     }
 
-
     public static void main(String[] args) {
         TrieTests ds = new TrieTests();
         ArrayList<String> al = new ArrayList<>();
@@ -88,6 +87,5 @@ class TrieTests {
         al.add("ghost");
         ds.addEntity(ds.getHead(), al);
         System.out.println();
-
     }
 }
