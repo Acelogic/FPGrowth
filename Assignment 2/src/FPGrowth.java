@@ -5,21 +5,21 @@ import java.util.stream.Collectors;
 public class FPGrowth {
 
     private TransactionCSVParser csvParser;
-    private LinkedHashMap<String, Integer> freqItemSet;
-    private LinkedHashMap<String, Integer> freqItemSetReversed;
+    private LinkedHashMap<String, Integer> fList;
+    private LinkedHashMap<String, Integer> fListReversed;
     private ArrayList<Transaction> transactionsList;
     private TreeSet<String> itemSet;
     public FPGrowth(int supportThreshold) throws IOException {
         csvParser = new TransactionCSVParser();
         transactionsList = csvParser.getTransactionList();
         itemSet = csvParser.getItemSet();
-        freqItemSetReversed = new LinkedHashMap<>();
+        fListReversed = new LinkedHashMap<>();
 
-        buildFreqItemSet(supportThreshold);
-        reOrderedItemSet();
+        buildFList(supportThreshold);
+        reOrderedFList();
     }
     // A count of how much of each item is in each transaction (X being items, Y being support count)
-    private void buildFreqItemSet(int supportThreshold) throws IOException {
+    private void buildFList(int supportThreshold) throws IOException {
         TreeMap<String, Integer> tempSupportCountList = new TreeMap<>();
 
         // Build Unpruned freq item sets with support counts
@@ -41,22 +41,22 @@ public class FPGrowth {
         }
         // Sorting keys based on value and reinserting them into a linkedhashmap to maintain insertion order
         // the .keySet() and .values() would be in order already when called
-        freqItemSet = tempSupportCountList.entrySet()
+        fList = tempSupportCountList.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 
-    private void reOrderedItemSet() {
+    private void reOrderedFList() {
         for (Transaction transaction : transactionsList) {
 
             // Pruning All Transactions of items that didn't meet support min
-            transaction.removeIf(item -> !freqItemSet.containsKey(item));
+            transaction.removeIf(item -> !fList.containsKey(item));
 
             // Convert Transaction Item list into LinkedHashMap, with values corresponding to freq item set
             LinkedHashMap<String, Integer> temp = new LinkedHashMap<>();
             for (String item : transaction) {
-                temp.put(item, freqItemSet.get(item));
+                temp.put(item, fList.get(item));
             }
 
             // Sorting Items By Value rather than key (Descending order)
@@ -81,18 +81,18 @@ public class FPGrowth {
         }
     }
 
-    public LinkedHashMap<String, Integer> getFreqItemSet() {
-        return freqItemSet;
+    public LinkedHashMap<String, Integer> getfList() {
+        return fList;
     }
 
-    public LinkedHashMap<String, Integer> getFreqItemSetReversed() {
-        List<String> list = new ArrayList<>(freqItemSet.keySet());
+    public LinkedHashMap<String, Integer> getFListReversed() {
+        List<String> list = new ArrayList<>(fList.keySet());
         Collections.reverse(list);
         for (String key : list) {
-            freqItemSetReversed.put(key, freqItemSet.get(key));
+            fListReversed.put(key, fList.get(key));
         }
 
-        return freqItemSetReversed;
+        return fListReversed;
 
     }
 

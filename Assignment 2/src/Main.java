@@ -1,16 +1,21 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.IOException;
 
 public class Main {
 
+
     public static void main(String[] args) throws IOException {
-
-    FPTree fpTree = new FPTree(120);
-    fpTree.insertAll();
-    fpTree.generateConditionalPatternBase();
-    System.out.println();
-    fpTree.generateConditionalFP();
-    System.out.println();
-
+        int supportThreshold = 75;
+        System.out.println("Support Threshold: " + supportThreshold);
+        FPTree fpTree = new FPTree(supportThreshold);
+        Long begin = System.currentTimeMillis();
+        fpTree.insertAll();
+        fpTree.generateConditionalPatternBase();
+        fpTree.generateConditionalFP();
+        fpTree.generateFrequentItemSetsAndRules();
+        Long end = System.currentTimeMillis() - begin;
+        System.out.println("Time: " + end + "ms");
 
 
     }
