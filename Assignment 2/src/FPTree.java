@@ -76,10 +76,6 @@ public class FPTree {
 
     public void generateConditionalPatternBase() {
         for (String key : fpGrowth.getFListReversed().keySet()) {
-            int x = 1;
-            // System.out.println();
-            // System.out.println("Item: " + key + " Support: " + fpGrowth.getFreqItemSetReversed().get(key));
-            // System.out.println("=============================================================");
             for (FPNode leaf : uniquePaths.get(key)) {
                 if (!(leaf.head.item == null)) {
                     ArrayList<FPNode> nodelink = leaf.getHeadLinks();
@@ -89,7 +85,6 @@ public class FPTree {
                     // removes item from it's own path
                     nodeLinkCpy.removeIf(n -> n.item.equals(key));
 
-                    //System.out.println("Num:" + x + " " + nodeLinkCpy + " <-- (" + key + "|" + leaf.freq + ")");
                     conditonalPatternBase.computeIfAbsent(key, k -> new LinkedHashMap<ArrayList<FPNode>, Integer>());
                     conditonalPatternBase.get(key).put(nodeLinkCpy, lastLeaf.freq);
 
@@ -100,9 +95,7 @@ public class FPTree {
                             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
                     conditonalPatternBase.put(key, sortedTemp);
                     leaf.getHeadLinks().clear();
-                    x++;
                 } else {
-                    // System.out.println("Single Node Path Freq: " + leaf.freq);
                 }
 
             }
@@ -114,16 +107,6 @@ public class FPTree {
         for (String key : conditonalPatternBase.keySet()) {
             LinkedHashMap<ArrayList<FPNode>, Integer> paths = conditonalPatternBase.get(key);
 
-            // Code to Print the paths
-   /*         System.out.println("Item: " + key + " Support: " + fpGrowth.getFListReversed().get(key) + "\n");
-            System.out.println("\t\t\t\t\t(Paths)\n");
-            for (ArrayList<FPNode> path : paths.keySet()) {
-                StringBuilder sb = new StringBuilder(path.toString() + " <-- " + key + "/" + paths.get(path));
-                sb.replace(0, 1, "[(Root),");
-                System.out.println(sb);
-            }
-            System.out.println();*/
-
             //Synced ArrayLists needed for getting words and associated weights
             ArrayList<String> allPathItemList = new ArrayList<>();
             ArrayList<Integer> allPathValueList = new ArrayList<>();
@@ -134,13 +117,8 @@ public class FPTree {
                     allPathValueList.add(paths.get(path));
                 }
             }
-           // System.out.println("ItemList: " + allPathItemList);
-
             HashSet<String> pathItemSet = new HashSet<>();
             pathItemSet.addAll(allPathItemList);
-           // System.out.println("Item Set: " + pathItemSet);
-           // System.out.println();
-
 
             // Making Conditional FP tree with frequency of items from conditional pattern base
             LinkedHashMap<String, Integer> conditionalFP = new LinkedHashMap<>();
@@ -160,7 +138,7 @@ public class FPTree {
                     }
                 }
             }
-           // System.out.println("==============================================");
+
             // Pruning Items in Conditional FP that doesn't meet support count
             for (String keySet :List.copyOf(conditionalFP.keySet())) {
                 if(conditionalFP.get(keySet) < supportThreshold) {
@@ -172,11 +150,6 @@ public class FPTree {
             }
         }
 
-/*        //Print Final Results
-        System.out.println("Conditional FP Tree");
-        for (String  fp: conditionalFPTreeMap.keySet()){
-            System.out.println("Key: " + fp + "Value: " + conditionalFPTreeMap.get(fp));;
-        }*/
     }
 
     public static <T> Set<Set<T>> powerSet(Set<T> originalSet) {
