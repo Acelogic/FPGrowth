@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        // Task 1
+/*        // Task 1
         TransactionCSVParser r = new TransactionCSVParser();
         System.out.println("CustomerID, Date of purchase, no_of_items(k)");
         for (TransactionLog log : r.getTransactionLogList()) {
@@ -17,11 +17,11 @@ public class Main {
             for (Transaction transaction : log.getTransactionMap().values()) {
                 System.out.println(transaction.toString());
             }
-        }
+        }*/
 
 
         // Task 2
-        int supportThreshold = 20;
+        int supportThreshold = 90;
         System.out.println("Support Threshold: " + supportThreshold);
         FPTree fpTree = new FPTree(supportThreshold);
         Long begin = System.currentTimeMillis();
